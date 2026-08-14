@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The LLM proposes, deterministic code disposes — Jeffery Vincent</title>
+<meta name="description" content="Building an options trading agent where every path a model can take is bounded by code it can't argue with.">
+
+<meta property="og:title" content="The LLM proposes, deterministic code disposes">
+<meta property="og:description" content="Every place a model touches money, something non-probabilistic gets the final say.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://jefferyvincent.com/posts/llm-proposes-code-disposes.html">
+<meta property="og:image" content="https://jefferyvincent.com/assets/hal-cognition.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<style type="text/tailwindcss">
+  @theme {
+    --color-paper: #EDF0F2;
+    --color-ink:   #16202B;
+    --color-muted: #5C6B78;
+    --color-rule:  #C9D3DA;
+    --color-gate:  #C9871B;
+
+    --font-display: "Bricolage Grotesque", system-ui, sans-serif;
+    --font-body:    "Newsreader", Georgia, serif;
+    --font-mono:    "JetBrains Mono", ui-monospace, monospace;
+  }
+
+  @layer base {
+    /* Prose default: every paragraph in the article gets the same rhythm.
+       Utilities still win over this, so `.my-8` on the pull quote holds. */
+    p { margin-bottom: 1.5rem; }
+
+    a:focus-visible {
+      outline: 2px solid var(--color-gate);
+      outline-offset: 3px;
+    }
+  }
+</style>
+</head>
+<body class="bg-paper text-ink font-body text-[1.125rem]/[1.7] antialiased">
+
+<div class="mx-auto max-w-[38rem] px-6">
+  <a class="inline-block border-b border-transparent pt-12 font-mono text-xs text-muted hover:border-gate hover:text-ink" href="/">&larr; Jeffery Vincent</a>
+</div>
+
+<article>
+  <header class="mb-12 border-b border-rule pt-10 pb-12">
+    <div class="mx-auto max-w-[38rem] px-6">
+      <p class="font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted">Decisions worth writing down</p>
+      <h1 class="mt-5 font-display text-[clamp(2rem,5.5vw,3rem)]/[1.05] font-extrabold tracking-[-0.025em]">The LLM proposes, deterministic code disposes</h1>
+    </div>
+  </header>
+
+  <div class="mx-auto max-w-[38rem] px-6">
+
+    <p class="text-xl text-muted">There's a tower in my office that listens, thinks, and stages options trades. Whisper hears me, two Ollama models reason, XTTS answers, and Alpaca gets the order. Every model weight lives on a single RTX 3090. Nothing leaves the house to make a decision.</p>
+
+    <p>The demo everyone wants is the one where I say "buy some NVDA calls" and it just does it. That demo is easy. It took an afternoon.</p>
+
+    <p>What took the rest of the build was making sure the language model never gets the last word about money.</p>
+
+    <h2 class="mt-12 mb-4 font-display text-[1.375rem]/[1.25] font-semibold tracking-[-0.015em]">The thing I actually believe</h2>
+
+    <p>Language models are excellent at proposing and unreliable at deciding. They're good at reading a chain, weighing a catalyst, arguing a bull case against a bear case. They are also non-deterministic, occasionally confident about nonsense, and — the part that matters — capable of talking themselves into anything if you let the conversation run long enough.</p>
+
+    <p class="my-8 border-l-[3px] border-gate py-1 pl-5 text-[1.1875rem]">At every point where a model's output touches money, something non-probabilistic gets the final say.</p>
+
+    <p>Not as a safety feature bolted on at the end. As the architecture.</p>
+
+    <h2 class="mt-12 mb-4 font-display text-[1.375rem]/[1.25] font-semibold tracking-[-0.015em]">Routing before reasoning</h2>
+
+    <p>Every turn hits a deterministic intent router before any model sees it. Quant commands, trade commands, and UI commands route by pattern match. Tool-calling is the fallback, not the default — it only fires when nothing matches.</p>
+
+    <p>This sounds like a performance optimization. It isn't. It means a model having an off day cannot mis-route an order. "Close my NVDA position" resolves the same way on every run, forever, regardless of what the model thinks it heard. The class of failure where an LLM creatively reinterprets a command it should have executed literally is simply not reachable.</p>
+
+    <h2 class="mt-12 mb-4 font-display text-[1.375rem]/[1.25] font-semibold tracking-[-0.015em]">The committee, and the gate it can't argue with</h2>
+
+    <p>Asking for a deep dive on a name convenes an actual desk.</p>
+
+    <p>Analysts run in parallel on the fast model: one on volatility (implied against realized), one on setup (chain structure and liquidity), one on catalysts (retrieved from my notes), one on my own standing thesis for that name if I've written one. Alongside them sits a regime read — Kaufman efficiency ratio, trending versus chop — which is the one vote in the room that no model casts.</p>
+
+    <p>Consensus forms a bias. The bias goes to a bull-versus-bear debate on the smart model. A reflection step reads how my past closed trades on that same name actually went. Then a judge model plays head trader and returns TRADE or PASS with a thesis.</p>
+
+    <p>And then the judge's verdict hits a rules gate that is ordinary Python.</p>
+
+    <p>The gate can force a PASS on a trade the judge wanted. It doesn't negotiate, it can't be persuaded by a well-argued thesis, and it doesn't care how confident the committee was. Four models can agree enthusiastically and still get overruled by a conditional.</p>
+
+    <p>I want to be precise about what happens next, because this is where people assume more restraint than exists. The system has an autopilot mode, and it has a robo trader that scans a universe, convenes the committee per name, and enters positions on strong verdicts without me. It manages its own exits by re-running the committee. It is genuinely autonomous.</p>
+
+    <p>What it isn't is unbounded. Autonomy here means the machine may act <em>within</em> a fence that deterministic code draws and the model cannot move.</p>
+
+    <h2 class="mt-12 mb-4 font-display text-[1.375rem]/[1.25] font-semibold tracking-[-0.015em]">The fence</h2>
+
+    <p>Three stacked gates, each doing a different job.</p>
+
+    <p>The rules gate judges the individual trade on its merits. Confirm mode stages an order and reads it back to me for a verbal "send it"; autopilot submits when the gate passes. And underneath both sit portfolio-level circuit breakers that don't care about any single trade's quality: an order-rate throttle, a cap on open positions, a cap on gross exposure, and a daily-loss kill switch.</p>
+
+    <!-- Breaks out of the 38rem prose column; the screenshot is 2.1:1 and unreadable at column width. -->
+    <figure class="relative left-1/2 my-12 w-[min(100vw-2rem,66rem)] max-w-none -translate-x-1/2">
+      <a class="block overflow-hidden rounded-lg bg-[#080C0F] ring-1 ring-ink/15" href="/assets/hal-cognition.png">
+        <picture>
+          <source srcset="/assets/hal-cognition.webp" type="image/webp">
+          <img class="block w-full" src="/assets/hal-cognition.png" width="2438" height="1150" loading="lazy" decoding="async"
+               alt="HAL's cognition overlay on a dark candlestick chart. A staged TSLA long-put order is laid out in a table — strike 400, expiry 2026-06-26, limit $9.13, stop loss $7.16, take profit $10.74, 8 contracts, max risk $1,432 — above a note offering to submit it as a buy-to-open limit order on the words &quot;place it.&quot; A warning line reads: sized down to $1,432 to stay under your 6% account risk cap, open positions already risk $4,199.">
+        </picture>
+      </a>
+      <figcaption class="mx-auto mt-4 max-w-[38rem] px-6 font-mono text-xs/[1.6] text-muted">
+        Confirm mode, mid-stage. The trade idea is the committee's; the size isn't. Deterministic code cut it to $1,432 to stay under the 6% account-risk cap, and nothing gets sent until I say <span class="text-ink">place it</span>.
+      </figcaption>
+    </figure>
+
+    <p>The kill switch latches. Once it trips, new entries are blocked and autopilot is demoted to confirm mode until I clear it by hand. A bad afternoon can't quietly resume being a bad afternoon.</p>
+
+    <p>One asymmetry I'd defend to anyone: <strong class="font-medium">exits are never blocked.</strong> Every risk control in the system restricts opening and getting bigger. Nothing restricts closing. A safety mechanism that can trap you in a position isn't a safety mechanism.</p>
+
+    <h2 class="mt-12 mb-4 font-display text-[1.375rem]/[1.25] font-semibold tracking-[-0.015em]">Letting a model tune a strategy without letting it grade itself</h2>
+
+    <p>The research loop is the piece I'd point at if someone asked what the hardest judgment call was.</p>
+
+    <p>It works like RD-Agent: the smart model proposes the next parameter grid, the optimizer scores it, repeat. That's a system where a model is optimizing something that will eventually risk capital, which should make anyone nervous.</p>
+
+    <p>Three things keep it honest.</p>
+
+    <p>The model may only select values from an audited allow-list. It proposes parameters; it never authors code. The search space is one I defined and can read in full.</p>
+
+    <p>The optimizer is the referee, and it's deterministic. The model cannot score its own suggestions — it proposes, and something that doesn't care about its feelings measures the result.</p>
+
+    <p>And a lock-box slice of data is held back before the loop starts and tested exactly once, at the end. If the lock-box disagrees with the loop's conclusion, the loop overfit itself and the result is discarded. Not adjusted. Discarded.</p>
+
+    <p>The optimizer itself carries three anti-curve-fitting guards, because a sweep across many configurations will always find something that looks brilliant: a walk-forward in-sample/out-of-sample split, a sample-size shrink so a profit factor computed on three trades gets treated as the noise it is, and a significance dampener that scales configs by the t-stat of their trade returns. A t-statistic under about 2 gets faded no matter how good the equity curve looks.</p>
+
+    <p>That last one kills a lot of pretty results. It's supposed to.</p>
+
+    <h2 class="mt-12 mb-4 font-display text-[1.375rem]/[1.25] font-semibold tracking-[-0.015em]">One exit rule, two lifetimes</h2>
+
+    <p>The structural detail I'm most pleased with is small.</p>
+
+    <p><code class="rounded-[3px] bg-ink/6 px-[0.35em] py-[0.1em] font-mono text-[0.875em]">strategy.exit_signal</code> is a single code path shared by backtests and live bracket management. Change a stop-loss percentage in my strategy notes and both move together, because there is no second implementation to drift.</p>
+
+    <p>Most backtests are a fiction: you test one exit implementation and then trade a different one, and the gap between them is where your edge quietly lives and dies. Here, a backtest exercises the exact logic that will manage the real position. That's the difference between a backtest that's evidence and a backtest that's a story.</p>
+
+    <h2 class="mt-12 mb-4 font-display text-[1.375rem]/[1.25] font-semibold tracking-[-0.015em]">Why this generalizes</h2>
+
+    <p>None of this is really about options.</p>
+
+    <p>Anyone wiring a language model into a system that does something consequential faces the same question, and mostly answers it with a prompt: <em>please don't do anything dangerous.</em> Prompts are not a control surface. They're a request, and the thing you're requesting from is the least predictable component you have.</p>
+
+    <p>The alternative isn't refusing to let models act. It's being deliberate about which decisions are probabilistic and which are not, and making sure the second category is the one that can say no.</p>
+
+    <p>Models propose. Code disposes. My house computer trades options, and the part of it I trust is the part that can't think.</p>
+
+    <hr class="mt-14 mb-8 border-rule">
+
+    <p class="pb-20 font-mono text-xs/[1.7] text-muted">HAL runs entirely on local hardware — Whisper, XTTS, and two Ollama models sharing 24GB. Alpaca in paper mode by default. Roughly 17,600 lines of Python across 46 modules, plus a Tauri/React front end.</p>
+
+  </div>
+</article>
+
+</body>
+</html>

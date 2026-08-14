@@ -52,7 +52,7 @@
   <div class="mx-auto max-w-[44rem] px-6">
     <p class="font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted animate-rise [animation-delay:0.05s] motion-reduce:animate-none">Jeffery Vincent &nbsp;/&nbsp; Virginia Beach, VA</p>
     <h1 class="mt-7 max-w-[16ch] font-display text-[clamp(2.25rem,7vw,3.75rem)]/[1.02] font-extrabold tracking-[-0.025em] animate-rise [animation-delay:0.13s] motion-reduce:animate-none">I build AI agents that <em class="not-italic text-gate">don't get the last word.</em></h1>
-    <p class="mt-7 max-w-[34rem] text-[1.1875rem] text-muted animate-rise [animation-delay:0.21s] motion-reduce:animate-none">Staff mobile engineer, ten years in. <strong class="font-medium text-ink">React Native, TypeScript, Python, LLMs.</strong> Most of what I build lately scans markets, proposes trades, and then stops — and waits for a person.</p>
+    <p class="mt-7 max-w-[34rem] text-[1.1875rem] text-muted animate-rise [animation-delay:0.21s] motion-reduce:animate-none">Staff mobile engineer, ten years in. <strong class="font-medium text-ink">React Native, TypeScript, Python, LLMs.</strong> Lately I build trading agents that reason on local hardware — and answer to deterministic code they can't argue with.</p>
   </div>
 </header>
 
@@ -65,39 +65,39 @@
       <div class="space-y-14">
 
         <article>
-          <h2 class="mb-5 font-display text-2xl/[1.2] font-semibold tracking-[-0.015em]">The trading agent that can't place an order</h2>
+          <h2 class="mb-5 font-display text-2xl/[1.2] font-semibold tracking-[-0.015em]">The trading agent that doesn't get the last word</h2>
           <div class="grid grid-cols-[auto_1fr] gap-x-4 min-[34rem]:gap-x-5">
             <div aria-hidden="true" class="w-[3px] rounded-xs bg-[linear-gradient(var(--color-rule)_0_46%,var(--color-gate)_46%_54%,var(--color-rule)_54%_100%)]"></div>
             <div class="space-y-5">
               <dl>
                 <dt class="mb-[0.35rem] font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-muted">The easy path</dt>
-                <dd>Give the agent broker credentials and let it trade. It's the demo everyone wants to see.</dd>
+                <dd>Let the model decide. Prompt it to be careful and hope the prompt holds.</dd>
               </dl>
               <dl>
                 <dt class="mb-[0.35rem] font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-gate">What shipped</dt>
-                <dd>A read-only scanning worker that can only produce proposals, and a separate approval step that a human has to clear before anything reaches the broker. No code path exists that places an order on its own. The split is the product, not a safety feature bolted on top.</dd>
+                <dd>An LLM committee debates a trade and a judge model returns a verdict — then that verdict hits a deterministic rules gate that can overrule it and can't be argued with. The autonomous mode is real, but it acts inside a fence of portfolio circuit breakers and a daily-loss kill switch that latches until cleared by hand. Exits are never blocked. Every place a model touches money, non-probabilistic code gets the final say.</dd>
               </dl>
             </div>
           </div>
-          <p class="mt-5 pl-[calc(3px_+_1rem)] font-mono text-xs text-muted min-[34rem]:pl-[calc(3px_+_1.25rem)]">Python · FastAPI · Railway · Alpaca</p>
+          <p class="mt-5 pl-[calc(3px_+_1rem)] font-mono text-xs text-muted min-[34rem]:pl-[calc(3px_+_1.25rem)]"><a class="border-b border-gate pb-px font-semibold text-ink hover:text-gate" href="/posts/llm-proposes-code-disposes.html">Read the writeup</a> &nbsp;·&nbsp; Python · FastAPI · Ollama · Alpaca</p>
         </article>
 
         <article>
-          <h2 class="mb-5 font-display text-2xl/[1.2] font-semibold tracking-[-0.015em]">Giving a local model a shell, safely</h2>
+          <h2 class="mb-5 font-display text-2xl/[1.2] font-semibold tracking-[-0.015em]">One exit rule, two lifetimes</h2>
           <div class="grid grid-cols-[auto_1fr] gap-x-4 min-[34rem]:gap-x-5">
             <div aria-hidden="true" class="w-[3px] rounded-xs bg-[linear-gradient(var(--color-rule)_0_46%,var(--color-gate)_46%_54%,var(--color-rule)_54%_100%)]"></div>
             <div class="space-y-5">
               <dl>
                 <dt class="mb-[0.35rem] font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-muted">The easy path</dt>
-                <dd>Let the model call tools directly. Fast to build, and fine right up until it isn't.</dd>
+                <dd>Write exit logic for the backtest, then write it again for live positions. Two implementations, quietly drifting apart.</dd>
               </dl>
               <dl>
                 <dt class="mb-[0.35rem] font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-gate">What shipped</dt>
-                <dd>A voice assistant running entirely on local hardware, where every tool call surfaces in a browser modal showing exactly what's about to run. I approve or I don't. Latency cost was real; the tradeoff was worth it.</dd>
+                <dd>A single exit code path shared by backtests and live bracket management. Change a stop level and both move together, because there is no second implementation to drift. It's the difference between a backtest that's evidence and a backtest that's a story.</dd>
               </dl>
             </div>
           </div>
-          <p class="mt-5 pl-[calc(3px_+_1rem)] font-mono text-xs text-muted min-[34rem]:pl-[calc(3px_+_1.25rem)]">FastAPI · faster-whisper · Ollama · Coqui XTTS</p>
+          <p class="mt-5 pl-[calc(3px_+_1rem)] font-mono text-xs text-muted min-[34rem]:pl-[calc(3px_+_1.25rem)]">Python · walk-forward validation · Massive · Alpaca</p>
         </article>
 
         <article>
@@ -140,7 +140,7 @@
       <li><a class="border-b border-rule pb-0.5 transition-colors duration-150 hover:border-gate motion-reduce:transition-none" href="https://x.com/jefferyvincent">X</a></li>
       <li><a class="border-b border-rule pb-0.5 transition-colors duration-150 hover:border-gate motion-reduce:transition-none" href="https://github.com/jefferyvincent">GitHub</a></li>
       <li><a class="border-b border-rule pb-0.5 transition-colors duration-150 hover:border-gate motion-reduce:transition-none" href="https://www.linkedin.com/in/jeffery-vincent-05797b388/">LinkedIn</a></li>
-      <li><a class="border-b border-rule pb-0.5 transition-colors duration-150 hover:border-gate motion-reduce:transition-none" href="mailto:jeffery.vincent@gmail.com">Email</a></li>
+      <li><a class="border-b border-rule pb-0.5 transition-colors duration-150 hover:border-gate motion-reduce:transition-none" href="mailto:jv@jefferyvincent.com">Email</a></li>
     </ul>
     <p class="max-w-[32rem] italic text-muted">Weekends I work the door at a bar. Ten years of code review prepared me for less of it than you'd think.</p>
   </div>

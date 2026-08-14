@@ -15,336 +15,134 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 
-<style>
-  :root{
-    --paper:#EDF0F2;
-    --ink:#16202B;
-    --muted:#5C6B78;
-    --rule:#C9D3DA;
-    --gate:#C9871B;
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<style type="text/tailwindcss">
+  @theme {
+    --color-paper: #EDF0F2;
+    --color-ink:   #16202B;
+    --color-muted: #5C6B78;
+    --color-rule:  #C9D3DA;
+    --color-gate:  #C9871B;
 
-    --display:"Bricolage Grotesque",system-ui,sans-serif;
-    --body:"Newsreader",Georgia,serif;
-    --mono:"JetBrains Mono",ui-monospace,monospace;
+    --font-display: "Bricolage Grotesque", system-ui, sans-serif;
+    --font-body:    "Newsreader", Georgia, serif;
+    --font-mono:    "JetBrains Mono", ui-monospace, monospace;
 
-    --measure:44rem;
-  }
+    /* fill-mode `both` holds the from-state through animation-delay,
+       so staggered elements stay hidden until their turn. */
+    --animate-rise: rise 0.6s cubic-bezier(0.2, 0.7, 0.3, 1) both;
 
-  *{box-sizing:border-box;}
-
-  html{-webkit-text-size-adjust:100%;}
-
-  body{
-    margin:0;
-    background:var(--paper);
-    color:var(--ink);
-    font-family:var(--body);
-    font-size:1.0625rem;
-    line-height:1.65;
-    -webkit-font-smoothing:antialiased;
-  }
-
-  .wrap{
-    max-width:var(--measure);
-    margin:0 auto;
-    padding:0 1.5rem;
-  }
-
-  a{color:inherit;}
-  a:focus-visible{
-    outline:2px solid var(--gate);
-    outline-offset:3px;
-  }
-
-  .eyebrow{
-    font-family:var(--mono);
-    font-size:0.6875rem;
-    font-weight:600;
-    letter-spacing:0.14em;
-    text-transform:uppercase;
-    color:var(--muted);
-    margin:0;
-  }
-
-  /* ---------- hero ---------- */
-
-  .hero{
-    padding:5.5rem 0 4rem;
-  }
-
-  .hero h1{
-    font-family:var(--display);
-    font-weight:800;
-    font-size:clamp(2.25rem,7vw,3.75rem);
-    line-height:1.02;
-    letter-spacing:-0.025em;
-    margin:1.75rem 0 0;
-    max-width:16ch;
-  }
-
-  .hero h1 em{
-    font-style:normal;
-    color:var(--gate);
-  }
-
-  .hero p{
-    margin:1.75rem 0 0;
-    max-width:34rem;
-    color:var(--muted);
-    font-size:1.1875rem;
-  }
-
-  .hero p strong{
-    color:var(--ink);
-    font-weight:500;
-  }
-
-  /* ---------- section framing ---------- */
-
-  .band{
-    border-top:1px solid var(--rule);
-    padding:3.5rem 0;
-  }
-
-  .band > .eyebrow{
-    margin-bottom:2.5rem;
-  }
-
-  /* ---------- decisions ---------- */
-
-  .decision + .decision{
-    margin-top:3.5rem;
-  }
-
-  .decision h2{
-    font-family:var(--display);
-    font-weight:600;
-    font-size:1.5rem;
-    line-height:1.2;
-    letter-spacing:-0.015em;
-    margin:0 0 1.25rem;
-  }
-
-  .gate{
-    display:grid;
-    grid-template-columns:auto 1fr;
-    gap:0 1.25rem;
-  }
-
-  .gate .spine{
-    width:3px;
-    background:var(--rule);
-    border-radius:2px;
-    grid-row:1 / span 2;
-  }
-
-  .decision.is-gated .gate .spine{
-    background:linear-gradient(var(--rule) 0 46%,var(--gate) 46% 54%,var(--rule) 54% 100%);
-  }
-
-  .turn{
-    margin:0;
-  }
-
-  .turn + .turn{
-    margin-top:1.25rem;
-  }
-
-  .turn dt{
-    font-family:var(--mono);
-    font-size:0.6875rem;
-    font-weight:600;
-    letter-spacing:0.12em;
-    text-transform:uppercase;
-    color:var(--muted);
-    margin-bottom:0.35rem;
-  }
-
-  .turn.shipped dt{
-    color:var(--gate);
-  }
-
-  .turn dd{
-    margin:0;
-  }
-
-  .stack{
-    font-family:var(--mono);
-    font-size:0.75rem;
-    color:var(--muted);
-    margin:1.25rem 0 0;
-    padding-left:calc(3px + 1.25rem);
-  }
-
-  /* ---------- now ---------- */
-
-  .now p{
-    margin:0 0 1.25rem;
-    max-width:34rem;
-  }
-
-  .now p:last-child{margin-bottom:0;}
-
-  /* ---------- footer ---------- */
-
-  footer{
-    border-top:1px solid var(--rule);
-    padding:3.5rem 0 5rem;
-  }
-
-  .links{
-    list-style:none;
-    margin:0 0 2.5rem;
-    padding:0;
-    display:flex;
-    flex-wrap:wrap;
-    gap:0.5rem 2rem;
-    font-family:var(--mono);
-    font-size:0.8125rem;
-  }
-
-  .links a{
-    text-decoration:none;
-    border-bottom:1px solid var(--rule);
-    padding-bottom:2px;
-    transition:border-color 0.15s ease;
-  }
-
-  .links a:hover{
-    border-color:var(--gate);
-  }
-
-  .aside{
-    margin:0;
-    color:var(--muted);
-    font-style:italic;
-    max-width:32rem;
-  }
-
-  /* ---------- load ---------- */
-
-  .rise{
-    opacity:0;
-    transform:translateY(10px);
-    animation:rise 0.6s cubic-bezier(0.2,0.7,0.3,1) forwards;
-  }
-
-  .rise:nth-child(1){animation-delay:0.05s;}
-  .rise:nth-child(2){animation-delay:0.13s;}
-  .rise:nth-child(3){animation-delay:0.21s;}
-
-  @keyframes rise{
-    to{opacity:1;transform:none;}
-  }
-
-  @media (prefers-reduced-motion:reduce){
-    .rise{
-      opacity:1;
-      transform:none;
-      animation:none;
+    @keyframes rise {
+      from { opacity: 0; translate: 0 10px; }
+      to   { opacity: 1; translate: 0 0; }
     }
-    *{transition:none !important;}
   }
 
-  @media (max-width:34rem){
-    .hero{padding:3.5rem 0 2.5rem;}
-    .gate{gap:0 1rem;}
-    .stack{padding-left:calc(3px + 1rem);}
+  @layer base {
+    a:focus-visible {
+      outline: 2px solid var(--color-gate);
+      outline-offset: 3px;
+    }
   }
 </style>
 </head>
-<body>
+<body class="bg-paper text-ink font-body text-[1.0625rem]/[1.65] antialiased">
 
-<header class="hero">
-  <div class="wrap">
-    <p class="eyebrow rise">Jeffery Vincent &nbsp;/&nbsp; Virginia Beach, VA</p>
-    <h1 class="rise">I build AI agents that <em>don't get the last word.</em></h1>
-    <p class="rise">Staff mobile engineer, ten years in. <strong>React Native, TypeScript, Python, LLMs.</strong> Most of what I build lately scans markets, proposes trades, and then stops — and waits for a person.</p>
+<header class="pt-14 pb-10 min-[34rem]:pt-22 min-[34rem]:pb-16">
+  <div class="mx-auto max-w-[44rem] px-6">
+    <p class="font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted animate-rise [animation-delay:0.05s] motion-reduce:animate-none">Jeffery Vincent &nbsp;/&nbsp; Virginia Beach, VA</p>
+    <h1 class="mt-7 max-w-[16ch] font-display text-[clamp(2.25rem,7vw,3.75rem)]/[1.02] font-extrabold tracking-[-0.025em] animate-rise [animation-delay:0.13s] motion-reduce:animate-none">I build AI agents that <em class="not-italic text-gate">don't get the last word.</em></h1>
+    <p class="mt-7 max-w-[34rem] text-[1.1875rem] text-muted animate-rise [animation-delay:0.21s] motion-reduce:animate-none">Staff mobile engineer, ten years in. <strong class="font-medium text-ink">React Native, TypeScript, Python, LLMs.</strong> Most of what I build lately scans markets, proposes trades, and then stops — and waits for a person.</p>
   </div>
 </header>
 
 <main>
 
-  <section class="band">
-    <div class="wrap">
-      <p class="eyebrow">Decisions worth writing down</p>
+  <section class="border-t border-rule py-14">
+    <div class="mx-auto max-w-[44rem] px-6">
+      <p class="mb-10 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted">Decisions worth writing down</p>
 
-      <article class="decision is-gated">
-        <h2>The trading agent that can't place an order</h2>
-        <div class="gate">
-          <div class="spine" aria-hidden="true"></div>
-          <div>
-            <dl class="turn">
-              <dt>The easy path</dt>
-              <dd>Give the agent broker credentials and let it trade. It's the demo everyone wants to see.</dd>
-            </dl>
-            <dl class="turn shipped">
-              <dt>What shipped</dt>
-              <dd>A read-only scanning worker that can only produce proposals, and a separate approval step that a human has to clear before anything reaches the broker. No code path exists that places an order on its own. The split is the product, not a safety feature bolted on top.</dd>
-            </dl>
+      <div class="space-y-14">
+
+        <article>
+          <h2 class="mb-5 font-display text-2xl/[1.2] font-semibold tracking-[-0.015em]">The trading agent that can't place an order</h2>
+          <div class="grid grid-cols-[auto_1fr] gap-x-4 min-[34rem]:gap-x-5">
+            <div aria-hidden="true" class="w-[3px] rounded-xs bg-[linear-gradient(var(--color-rule)_0_46%,var(--color-gate)_46%_54%,var(--color-rule)_54%_100%)]"></div>
+            <div class="space-y-5">
+              <dl>
+                <dt class="mb-[0.35rem] font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-muted">The easy path</dt>
+                <dd>Give the agent broker credentials and let it trade. It's the demo everyone wants to see.</dd>
+              </dl>
+              <dl>
+                <dt class="mb-[0.35rem] font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-gate">What shipped</dt>
+                <dd>A read-only scanning worker that can only produce proposals, and a separate approval step that a human has to clear before anything reaches the broker. No code path exists that places an order on its own. The split is the product, not a safety feature bolted on top.</dd>
+              </dl>
+            </div>
           </div>
-        </div>
-        <p class="stack">Python · FastAPI · Railway · Alpaca</p>
-      </article>
+          <p class="mt-5 pl-[calc(3px_+_1rem)] font-mono text-xs text-muted min-[34rem]:pl-[calc(3px_+_1.25rem)]">Python · FastAPI · Railway · Alpaca</p>
+        </article>
 
-      <article class="decision is-gated">
-        <h2>Giving a local model a shell, safely</h2>
-        <div class="gate">
-          <div class="spine" aria-hidden="true"></div>
-          <div>
-            <dl class="turn">
-              <dt>The easy path</dt>
-              <dd>Let the model call tools directly. Fast to build, and fine right up until it isn't.</dd>
-            </dl>
-            <dl class="turn shipped">
-              <dt>What shipped</dt>
-              <dd>A voice assistant running entirely on local hardware, where every tool call surfaces in a browser modal showing exactly what's about to run. I approve or I don't. Latency cost was real; the tradeoff was worth it.</dd>
-            </dl>
+        <article>
+          <h2 class="mb-5 font-display text-2xl/[1.2] font-semibold tracking-[-0.015em]">Giving a local model a shell, safely</h2>
+          <div class="grid grid-cols-[auto_1fr] gap-x-4 min-[34rem]:gap-x-5">
+            <div aria-hidden="true" class="w-[3px] rounded-xs bg-[linear-gradient(var(--color-rule)_0_46%,var(--color-gate)_46%_54%,var(--color-rule)_54%_100%)]"></div>
+            <div class="space-y-5">
+              <dl>
+                <dt class="mb-[0.35rem] font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-muted">The easy path</dt>
+                <dd>Let the model call tools directly. Fast to build, and fine right up until it isn't.</dd>
+              </dl>
+              <dl>
+                <dt class="mb-[0.35rem] font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-gate">What shipped</dt>
+                <dd>A voice assistant running entirely on local hardware, where every tool call surfaces in a browser modal showing exactly what's about to run. I approve or I don't. Latency cost was real; the tradeoff was worth it.</dd>
+              </dl>
+            </div>
           </div>
-        </div>
-        <p class="stack">FastAPI · faster-whisper · Ollama · Coqui XTTS</p>
-      </article>
+          <p class="mt-5 pl-[calc(3px_+_1rem)] font-mono text-xs text-muted min-[34rem]:pl-[calc(3px_+_1.25rem)]">FastAPI · faster-whisper · Ollama · Coqui XTTS</p>
+        </article>
 
-      <article class="decision">
-        <h2>One entitlement model, three billing systems</h2>
-        <div class="gate">
-          <div class="spine" aria-hidden="true"></div>
-          <div>
-            <dl class="turn">
-              <dt>The easy path</dt>
-              <dd>Handle StoreKit, Play Billing, and Stripe where each one shows up in the app.</dd>
-            </dl>
-            <dl class="turn shipped">
-              <dt>What shipped</dt>
-              <dd>A single source of truth for what a user is entitled to, with the three billing systems reduced to adapters feeding it. Restore, refund, and cross-platform purchase stopped being three separate bug surfaces.</dd>
-            </dl>
+        <article>
+          <h2 class="mb-5 font-display text-2xl/[1.2] font-semibold tracking-[-0.015em]">One entitlement model, three billing systems</h2>
+          <div class="grid grid-cols-[auto_1fr] gap-x-4 min-[34rem]:gap-x-5">
+            <div aria-hidden="true" class="w-[3px] rounded-xs bg-rule"></div>
+            <div class="space-y-5">
+              <dl>
+                <dt class="mb-[0.35rem] font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-muted">The easy path</dt>
+                <dd>Handle StoreKit, Play Billing, and Stripe where each one shows up in the app.</dd>
+              </dl>
+              <dl>
+                <dt class="mb-[0.35rem] font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-gate">What shipped</dt>
+                <dd>A single source of truth for what a user is entitled to, with the three billing systems reduced to adapters feeding it. Restore, refund, and cross-platform purchase stopped being three separate bug surfaces.</dd>
+              </dl>
+            </div>
           </div>
-        </div>
-        <p class="stack">React Native · StoreKit · Play Billing · Stripe</p>
-      </article>
+          <p class="mt-5 pl-[calc(3px_+_1rem)] font-mono text-xs text-muted min-[34rem]:pl-[calc(3px_+_1.25rem)]">React Native · StoreKit · Play Billing · Stripe</p>
+        </article>
 
+      </div>
     </div>
   </section>
 
-  <section class="band now">
-    <div class="wrap">
-      <p class="eyebrow">Now</p>
-      <p>Mobile engineering on a fitness app used by youth sports leagues. Building trading agents on the side, and writing about what closed trades reveal that open ones can't.</p>
-      <p>Open to Staff and Principal mobile roles.</p>
+  <section class="border-t border-rule py-14">
+    <div class="mx-auto max-w-[44rem] px-6">
+      <p class="mb-10 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted">Now</p>
+      <div class="space-y-5">
+        <p class="max-w-[34rem]">Mobile engineering on a fitness app used by youth sports leagues. Building trading agents on the side, and writing about what closed trades reveal that open ones can't.</p>
+        <p class="max-w-[34rem]">Open to Staff and Principal mobile roles.</p>
+      </div>
     </div>
   </section>
 
 </main>
 
-<footer>
-  <div class="wrap">
-    <ul class="links">
-      <li><a href="https://x.com/YOUR_HANDLE">X</a></li>
-      <li><a href="https://github.com/YOUR_HANDLE">GitHub</a></li>
-      <li><a href="https://linkedin.com/in/YOUR_HANDLE">LinkedIn</a></li>
-      <li><a href="mailto:you@jefferyvincent.com">Email</a></li>
+<footer class="border-t border-rule pt-14 pb-20">
+  <div class="mx-auto max-w-[44rem] px-6">
+    <ul class="mb-10 flex flex-wrap gap-x-8 gap-y-2 font-mono text-[0.8125rem]">
+      <li><a class="border-b border-rule pb-0.5 transition-colors duration-150 hover:border-gate motion-reduce:transition-none" href="https://x.com/jefferyvincent">X</a></li>
+      <li><a class="border-b border-rule pb-0.5 transition-colors duration-150 hover:border-gate motion-reduce:transition-none" href="https://github.com/jefferyvincent">GitHub</a></li>
+      <li><a class="border-b border-rule pb-0.5 transition-colors duration-150 hover:border-gate motion-reduce:transition-none" href="https://www.linkedin.com/in/jeffery-vincent-05797b388/">LinkedIn</a></li>
+      <li><a class="border-b border-rule pb-0.5 transition-colors duration-150 hover:border-gate motion-reduce:transition-none" href="mailto:jeffery.vincent@gmail.com">Email</a></li>
     </ul>
-    <p class="aside">Weekends I work the door at a bar. Ten years of code review prepared me for less of it than you'd think.</p>
+    <p class="max-w-[32rem] italic text-muted">Weekends I work the door at a bar. Ten years of code review prepared me for less of it than you'd think.</p>
   </div>
 </footer>
 

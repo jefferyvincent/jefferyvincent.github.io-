@@ -83,6 +83,24 @@
         </article>
 
         <article>
+          <h2 class="mb-5 font-display text-2xl/[1.2] font-semibold tracking-[-0.015em]">A backtest that runs the live trader's exit code</h2>
+          <div class="grid grid-cols-[auto_1fr] gap-x-4 min-[34rem]:gap-x-5">
+            <div aria-hidden="true" class="w-[3px] rounded-xs bg-[linear-gradient(var(--color-rule)_0_46%,var(--color-gate)_46%_54%,var(--color-rule)_54%_100%)]"></div>
+            <div class="space-y-5">
+              <dl>
+                <dt class="mb-[0.35rem] font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-muted">The easy path</dt>
+                <dd>Tune a strategy until the backtest looks great, then rewrite the exit logic for live trading and trust that they match.</dd>
+              </dl>
+              <dl>
+                <dt class="mb-[0.35rem] font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-gate">What shipped</dt>
+                <dd>One exit rule, one code path, shared by the backtester and the live bracket manager — so a backtest exercises the exact logic that manages a real position. On top sits a research loop where a local model proposes the next parameter grid from an audited allow-list (no generated code), a walk-forward optimizer scores it out of sample, and a held-back lock-box validates the winner exactly once. Each layer referees the one above it.</dd>
+              </dl>
+            </div>
+          </div>
+          <p class="mt-5 pl-[calc(3px_+_1rem)] font-mono text-xs text-muted min-[34rem]:pl-[calc(3px_+_1.25rem)]">Python · Ollama · Alpaca · SQLite · Obsidian</p>
+        </article>
+
+        <article>
           <h2 class="mb-5 font-display text-2xl/[1.2] font-semibold tracking-[-0.015em]">One entitlement model, three billing systems</h2>
           <div class="grid grid-cols-[auto_1fr] gap-x-4 min-[34rem]:gap-x-5">
             <div aria-hidden="true" class="w-[3px] rounded-xs bg-rule"></div>
@@ -123,9 +141,53 @@
 
   <section class="border-t border-rule py-14">
     <div class="mx-auto max-w-[44rem] px-6">
+      <p class="mb-10 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted">Projects</p>
+
+      <div class="space-y-14">
+
+        <article>
+          <img src="/assets/hal-street.webp" alt="HAL Street: an illustrated street sign reading HAL Street, AI powered trading agent" width="840" height="618" loading="lazy" class="mb-5 w-full rounded-xs border border-rule">
+          <h2 class="mb-3 font-display text-2xl/[1.2] font-semibold tracking-[-0.015em]">HAL Street</h2>
+          <p class="max-w-[34rem]">Built for the Alpaca AI Trading Agents Hackathon (Aug 28 – Sep 4, 2026). An options agent that separates decisions from execution: the model picks, deterministic code decides. A deterministic builder assembles credit spreads and iron condors from the live chain with delta-based strikes; the LLM returns closed-schema JSON — select, size, justify, or decline — and 17 pure-Python risk gates with no model calls and no network evaluate every proposal. Every decision and rejection is logged.</p>
+          <p class="mt-3 font-mono text-xs text-muted">Python · Alpaca MCP · FastMCP · pytest · Ruff</p>
+          <p class="mt-3 font-mono text-xs"><a class="border-b border-gate pb-px font-semibold hover:text-gate" href="/assets/alpaca-hackathon-certificate.webp">Hackathon certificate</a></p>
+        </article>
+
+        <article>
+          <h2 class="mb-3 font-display text-2xl/[1.2] font-semibold tracking-[-0.015em]">HAL</h2>
+          <p class="max-w-[34rem]">A self-hosted agentic trading system that runs entirely on local LLMs — Qwen 3.6 27B plus a secondary model via Ollama, on a single RTX 3090. A multi-agent committee with judge scoring, a RAG-backed context store, and a natural-language layer that turns "optimize SPY" into a backtest job, with a regime-aware parameter-sweep optimizer behind it. Voice in and out through faster-whisper and XTTS v2; tool calls wait on human approval; deterministic risk gates sit in front of every order.</p>
+          <p class="mt-3 font-mono text-xs text-muted">Python · Rust · TypeScript · FastAPI · Tauri · React · Alpaca</p>
+        </article>
+
+        <article>
+          <img src="/assets/heyace.webp" alt="HeyAce landing page: Walk in ready, your AI interview coach" width="871" height="406" loading="lazy" class="mb-5 w-full rounded-xs border border-rule">
+          <h2 class="mb-3 font-display text-2xl/[1.2] font-semibold tracking-[-0.015em]">HeyAce</h2>
+          <p class="max-w-[34rem]">An AI interview coach, from first prep to the real thing. LLM-powered coaching and feedback with speech-to-text, aimed at desktop and mobile. In private development; the waitlist is open.</p>
+          <p class="mt-3 font-mono text-xs text-muted">TypeScript · React · Vite</p>
+        </article>
+
+        <article>
+          <h2 class="mb-3 font-display text-2xl/[1.2] font-semibold tracking-[-0.015em]">Upward Run Club</h2>
+          <p class="max-w-[34rem]">A React Native fitness and activity-tracking app with in-app purchases on iOS and Google Play. Background geolocation and maps, Garmin integration, Apple/Google/Facebook sign-in, push via Firebase, and server-side receipt validation against an ASP.NET Core backend on Azure.</p>
+          <p class="mt-3 font-mono text-xs text-muted">React Native · Expo · TypeScript · Zustand · TanStack Query · ASP.NET Core · Azure</p>
+        </article>
+
+        <article>
+          <img src="/assets/tradescans.webp" alt="TradeScans landing page: Stop repeating the same trading mistakes" width="1198" height="995" loading="lazy" class="mb-5 w-full rounded-xs border border-rule">
+          <h2 class="mb-3 font-display text-2xl/[1.2] font-semibold tracking-[-0.015em]">TradeScans</h2>
+          <p class="max-w-[34rem]">Co-founded trading-analysis platform: a React Native app and a Python AI backend for closed-trade analysis. Pluggable LLM providers (Gemma 2, Claude, GPT-4o, Ollama), daily and weekly insights, brokerage CSV ingestion, and credit-based purchases across the App Store, Google Play and Stripe.</p>
+          <p class="mt-3 font-mono text-xs text-muted">React Native · FastAPI · Pydantic · Docker · Railway</p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="border-t border-rule py-14">
+    <div class="mx-auto max-w-[44rem] px-6">
       <p class="mb-10 font-mono text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted">Now</p>
       <div class="space-y-5">
-        <p class="max-w-[34rem]">Mobile engineering at Upward Sports, on Upward Run Club. Building trading agents on the side, and writing about what closed trades reveal that open ones can't.</p>
+        <p class="max-w-[34rem]">Mobile engineering at Upward Sports, on Upward Run Club. Building HAL on the side — a local, voice-driven trading assistant with a multi-agent trade committee, a deterministic rules gate, and a walk-forward research loop — and writing about what closed trades reveal that open ones can't.</p>
         <p class="max-w-[34rem]">Open to Staff and Principal mobile roles.</p>
       </div>
     </div>
